@@ -26,7 +26,7 @@ interface ProjectModalProps {
 
 export default function ProjectModal({ project, onClose }: ProjectModalProps) {
   const [copiedHex, setCopiedHex] = useState<string | null>(null);
-  const [activeImage, setActiveImage] = useState<string>("");
+  const [activeImage, setActiveImage] = useState<string>(project?.coverImage || "");
   const [selectedZoomImage, setSelectedZoomImage] = useState<string | null>(null);
 
   // Set default active image when project changes
@@ -59,14 +59,16 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
 
   if (!project) return null;
 
+  const currentDisplayImage = activeImage || project.coverImage;
+
   const copyToClipboard = (hex: string) => {
     navigator.clipboard.writeText(hex);
     setCopiedHex(hex);
     setTimeout(() => setCopiedHex(null), 2000);
   };
 
-  const images = project.galleryImages.length > 0 ? project.galleryImages : [project.coverImage];
-  const currentImageIndex = images.indexOf(activeImage);
+  const images = project.galleryImages && project.galleryImages.length > 0 ? project.galleryImages : [project.coverImage];
+  const currentImageIndex = images.indexOf(currentDisplayImage) >= 0 ? images.indexOf(currentDisplayImage) : 0;
 
   const handleNextImage = () => {
     const nextIdx = (currentImageIndex + 1) % images.length;
@@ -79,28 +81,28 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
   };
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-6 bg-black/90 backdrop-blur-2xl animate-in fade-in duration-300">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-2 sm:p-6 bg-black/90 backdrop-blur-2xl animate-in fade-in duration-300">
       
       {/* Background click to close */}
       <div className="fixed inset-0" onClick={onClose} />
 
       {/* Main Container: Split 2-Column Side-by-Side (Like Photo Lightbox) */}
-      <div className="relative w-full max-w-6xl max-h-[95vh] overflow-hidden bg-canvas-900 border border-white/15 rounded-3xl shadow-2xl z-10 flex flex-col md:flex-row">
+      <div className="relative w-full max-w-6xl max-h-[94vh] overflow-y-auto md:overflow-hidden bg-canvas-900 border border-white/15 rounded-3xl shadow-2xl z-10 flex flex-col md:flex-row">
         
         {/* Floating Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 z-30 p-2.5 rounded-full bg-black/60 hover:bg-white/20 text-white backdrop-blur-md border border-white/10 transition-colors"
+          className="absolute top-3 right-3 sm:top-4 sm:right-4 z-30 p-2.5 rounded-full bg-black/75 hover:bg-white/20 text-white backdrop-blur-md border border-white/20 shadow-xl transition-colors"
           aria-label="Cerrar caso de estudio"
         >
           <X className="w-5 h-5" />
         </button>
 
-        {/* LEFT COLUMN: Media Preview & Design Strategy (Not overly wide, contained & sleek) */}
-        <div className="relative flex-grow flex flex-col justify-between bg-black/95 p-4 sm:p-6 md:p-7 overflow-y-auto space-y-5">
+        {/* LEFT COLUMN: Media Preview & Design Strategy (Visible & scrollable on mobile) */}
+        <div className="relative w-full md:flex-1 flex flex-col justify-between bg-black/95 p-4 sm:p-6 md:p-7 md:overflow-y-auto space-y-4 sm:space-y-5 flex-shrink-0 md:flex-shrink">
           
           {/* Main Media Showcase */}
-          <div className="relative flex-grow flex items-center justify-center bg-canvas-950/80 rounded-2xl border border-white/10 p-3 sm:p-4 min-h-[300px] md:min-h-[420px] group">
+          <div className="relative w-full flex items-center justify-center bg-canvas-950/90 rounded-2xl border border-white/10 p-2 sm:p-4 min-h-[220px] sm:min-h-[280px] md:min-h-[380px] group flex-shrink-0">
             
             {/* Previous image arrow */}
             {images.length > 1 && (
@@ -109,29 +111,29 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                   e.stopPropagation();
                   handlePrevImage();
                 }}
-                className="absolute left-3 top-1/2 -translate-y-1/2 z-20 p-2.5 rounded-full bg-black/70 hover:bg-white/20 text-white backdrop-blur-md border border-white/15 transition-all hover:scale-110"
+                className="absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 z-20 p-2 sm:p-2.5 rounded-full bg-black/75 hover:bg-white/20 text-white backdrop-blur-md border border-white/20 transition-all hover:scale-110 shadow-lg"
                 aria-label="Imagen anterior"
               >
-                <ChevronLeft className="w-5 h-5" />
+                <ChevronLeft className="w-4 sm:w-5 h-4 sm:h-5" />
               </button>
             )}
 
             {/* Active Image */}
             <div
-              onClick={() => setSelectedZoomImage(activeImage || project.coverImage)}
+              onClick={() => setSelectedZoomImage(currentDisplayImage)}
               className="cursor-zoom-in relative flex items-center justify-center w-full h-full"
               title="Haz clic para ver en pantalla completa"
             >
               <img
-                src={activeImage || project.coverImage}
+                src={currentDisplayImage}
                 alt={project.title}
-                className="max-h-[50vh] md:max-h-[56vh] w-auto max-w-full object-contain rounded-xl shadow-2xl group-hover:scale-[1.01] transition-transform duration-300"
+                className="max-h-[200px] sm:max-h-[260px] md:max-h-[50vh] w-auto max-w-full object-contain rounded-xl shadow-2xl group-hover:scale-[1.01] transition-transform duration-300"
               />
               
               {/* Zoom pill overlay */}
               <div className="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity rounded-xl flex items-center justify-center pointer-events-none">
-                <span className="px-4 py-2 rounded-full bg-black/80 backdrop-blur-md border border-white/20 text-xs font-mono text-white flex items-center gap-2 shadow-2xl">
-                  <Maximize2 className="w-3.5 h-3.5 text-brand-400" />
+                <span className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-black/80 backdrop-blur-md border border-white/20 text-[11px] sm:text-xs font-mono text-white flex items-center gap-1.5 sm:gap-2 shadow-2xl">
+                  <Maximize2 className="w-3 sm:w-3.5 h-3 sm:h-3.5 text-brand-400" />
                   <span>Ver en Pantalla Completa</span>
                 </span>
               </div>
@@ -144,10 +146,10 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                   e.stopPropagation();
                   handleNextImage();
                 }}
-                className="absolute right-3 top-1/2 -translate-y-1/2 z-20 p-2.5 rounded-full bg-black/70 hover:bg-white/20 text-white backdrop-blur-md border border-white/15 transition-all hover:scale-110"
+                className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 z-20 p-2 sm:p-2.5 rounded-full bg-black/75 hover:bg-white/20 text-white backdrop-blur-md border border-white/20 transition-all hover:scale-110 shadow-lg"
                 aria-label="Siguiente imagen"
               >
-                <ChevronRight className="w-5 h-5" />
+                <ChevronRight className="w-4 sm:w-5 h-4 sm:h-5" />
               </button>
             )}
           </div>
