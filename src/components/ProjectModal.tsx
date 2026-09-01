@@ -350,40 +350,41 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
       {/* Fullscreen High-Resolution Zoom Lightbox Overlay */}
       {selectedZoomImage && (
         <div
-          className="fixed inset-0 z-[120] flex items-center justify-center p-3 sm:p-6 bg-black/95 backdrop-blur-2xl animate-in fade-in zoom-in-95 duration-200"
+          className="fixed inset-0 z-[130] flex items-center justify-center p-2 sm:p-6 bg-black/95 backdrop-blur-2xl animate-in fade-in zoom-in-95 duration-200 cursor-zoom-out"
           onClick={() => setSelectedZoomImage(null)}
         >
-          {/* Close button top right */}
+          {/* Prominent Close button top right */}
           <button
-            onClick={() => setSelectedZoomImage(null)}
-            className="absolute top-5 right-5 z-50 p-3 rounded-full bg-white/15 hover:bg-white/30 text-white backdrop-blur-md border border-white/20 shadow-2xl transition-all hover:scale-110"
+            onClick={(e) => {
+              e.stopPropagation();
+              setSelectedZoomImage(null);
+            }}
+            className="absolute top-4 right-4 sm:top-6 sm:right-6 z-[150] w-11 h-11 rounded-full bg-black/85 hover:bg-white/25 text-white backdrop-blur-xl border border-white/30 shadow-2xl flex items-center justify-center transition-all hover:scale-110 active:scale-95"
             aria-label="Cerrar vista ampliada"
           >
             <X className="w-6 h-6" />
           </button>
 
-          {/* Top Bar Info */}
-          <div className="absolute top-5 left-6 z-50 flex items-center gap-2 pointer-events-none">
-            <span className="px-3 py-1.5 rounded-full bg-black/70 backdrop-blur-md border border-white/20 text-xs font-mono text-gray-200">
-              Vista en Alta Resolución • {project.title}
+          {/* Top Bar Info (Truncated on mobile so it never collides with close button) */}
+          <div className="absolute top-4 left-4 sm:top-6 sm:left-6 z-[140] flex items-center gap-2 pointer-events-none max-w-[calc(100%-80px)] sm:max-w-md">
+            <span className="px-3 py-1.5 rounded-full bg-black/80 backdrop-blur-md border border-white/20 text-xs font-mono text-gray-200 truncate">
+              {project.title}
             </span>
           </div>
 
-          {/* Fullscreen Image Container */}
-          <div
-            className="relative max-w-7xl max-h-[92vh] w-full h-full flex items-center justify-center p-2"
-            onClick={(e) => e.stopPropagation()}
-          >
+          {/* Fullscreen Image Viewport (Clicking anywhere closes zoom) */}
+          <div className="relative max-w-7xl max-h-[92vh] w-full h-full flex items-center justify-center p-1 sm:p-3">
             <img
               src={selectedZoomImage}
               alt="Vista ampliada"
-              className="max-h-[90vh] max-w-[95vw] w-auto h-auto object-contain rounded-2xl shadow-2xl border border-white/15"
+              className="max-h-[88vh] max-w-[96vw] w-auto h-auto object-contain rounded-2xl shadow-2xl border border-white/15"
             />
           </div>
 
           {/* Bottom helper text */}
-          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-50 text-[11px] font-mono text-gray-400 bg-black/60 px-4 py-1.5 rounded-full border border-white/10 pointer-events-none">
-            Haz clic en cualquier lugar o presiona ESC para cerrar
+          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-[140] text-[11px] font-mono text-gray-300 bg-black/80 px-4 py-1.5 rounded-full border border-white/15 pointer-events-none whitespace-nowrap shadow-lg">
+            <span className="sm:hidden">Toca en cualquier lugar o la ✕ para cerrar</span>
+            <span className="hidden sm:inline">Haz clic en cualquier lugar o presiona ESC para cerrar</span>
           </div>
         </div>
       )}
