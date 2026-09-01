@@ -10,7 +10,7 @@ export default function ContactSection() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    projectType: "Puesto Diseñador Gráfico",
+    projectType: "Oportunidad Laboral / Puesto",
     message: "",
   });
 
@@ -22,6 +22,20 @@ export default function ContactSection() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    const formattedMessage = [
+      "¡Hola Willy Abraham! Te contacto desde tu portafolio web:",
+      "",
+      `*• Nombre / Empresa:* ${formData.name}`,
+      `*• Correo:* ${formData.email}`,
+      `*• Motivo:* ${formData.projectType}`,
+      "",
+      "*• Mensaje:*",
+      formData.message
+    ].join("\n");
+
+    const whatsappUrl = `https://api.whatsapp.com/send?phone=51963530811&text=${encodeURIComponent(formattedMessage)}`;
+    window.open(whatsappUrl, "_blank");
     setFormSubmitted(true);
   };
 
@@ -228,12 +242,12 @@ export default function ContactSection() {
                       onChange={(e) => setFormData({ ...formData, projectType: e.target.value })}
                       className="w-full px-4 py-3 rounded-xl bg-canvas-900 border border-white/10 text-white text-sm focus:outline-none focus:border-brand-500 transition-colors"
                     >
-                      <option value="Puesto Diseñador Gráfico">Oportunidad Laboral (Diseñador Gráfico)</option>
-                      <option value="Identidad de Marca">Proyecto de Branding / Identidad Visual</option>
-                      <option value="Editorial y Posters">Diseño Editorial / Cartelería</option>
-                      <option value="Fotografía y Lightroom">Curaduría Fotográfica & Retoque</option>
-                      <option value="UI/UX y Web">Diseño UI/UX y Desarrollo Web</option>
-                      <option value="Otro">Otro Asunto</option>
+                      <option value="Oportunidad Laboral (Desarrollo / Diseño)">Oportunidad Laboral (Desarrollo / Diseño)</option>
+                      <option value="Desarrollo de Software & Web">Desarrollo de Software & Web (Next.js / .NET / Flutter)</option>
+                      <option value="Marketing Digital & Social Commerce">Marketing Digital & Social Media (E-Commerce)</option>
+                      <option value="Branding & Identidad Visual">Branding & Identidad Visual de Marca</option>
+                      <option value="Fotografía & Retoque en Lightroom">Fotografía Comercial & Color Grading (Lightroom)</option>
+                      <option value="Otro Asunto">Otro Asunto</option>
                     </select>
                   </div>
 
@@ -245,7 +259,7 @@ export default function ContactSection() {
                     <textarea
                       required
                       rows={4}
-                      placeholder="Cuéntame sobre el puesto, los objetivos del proyecto o agenda una breve llamada..."
+                      placeholder="Cuéntame sobre el puesto, los objetivos del proyecto o los requerimientos técnicos..."
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                       className="w-full px-4 py-3 rounded-xl bg-white/[0.04] border border-white/10 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-brand-500 transition-colors resize-none"
@@ -258,7 +272,7 @@ export default function ContactSection() {
                     className="w-full flex items-center justify-center gap-2 py-4 rounded-xl bg-gradient-to-r from-brand-500 to-amber-500 hover:from-brand-600 hover:to-amber-600 text-white font-bold text-sm shadow-xl shadow-brand-500/25 transition-all hover:scale-[1.02] active:scale-[0.98]"
                   >
                     <Send className="w-4 h-4" />
-                    <span>Enviar Mensaje a Abraham</span>
+                    <span>Enviar Mensaje</span>
                   </button>
                 </form>
               )}
