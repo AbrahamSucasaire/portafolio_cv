@@ -74,11 +74,11 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
         <div className="p-6 sm:p-8 lg:p-10 space-y-10">
           
           {/* Title & Subtitle */}
-          <div className="space-y-2.5 max-w-4xl">
-            <h2 className="font-display font-extrabold text-2xl sm:text-4xl lg:text-5xl text-white tracking-tight">
+          <div className="space-y-2 max-w-4xl">
+            <h2 className="font-display font-bold text-xl sm:text-2xl lg:text-3xl text-white tracking-tight leading-snug">
               {project.title}
             </h2>
-            <p className="text-base sm:text-lg text-gray-300 leading-relaxed">
+            <p className="text-sm sm:text-base text-gray-300 leading-relaxed">
               {project.subtitle}
             </p>
           </div>
