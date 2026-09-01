@@ -3,10 +3,10 @@ import { DesignProject, PhotoItem, SkillCategory, ExperienceItem, EducationItem 
 export const PERSONAL_INFO = {
   name: "Willy Abraham Sucasaire Coaquira",
   displayName: "Abraham Sucasaire",
-  roleTitle: "Diseñador Visual & Mid-Level Developer",
-  tagline: "Desarrollo de software y diseño visual con sensibilidad fotográfica, IA y precisión técnica.",
-  bio: "Desarrollador de software Mid-Level y entusiasta apasionado de la fotografía, la edición en Lightroom y el diseño visual. Combino la solidez del desarrollo Full Stack (.NET, Java, Next.js) con el uso de herramientas de IA generativa y sensibilidad estética para crear plataformas funcionales y piezas visuales memorables.",
-  shortBio: "Ingeniero y desarrollador mid-level apasionado por la fotografía de paisajes andinos, la curaduría en Lightroom y la exploración de interfaces modernas apoyadas en IA.",
+  roleTitle: "Mid-Level Developer • Marketing, Fotografía & Diseño",
+  tagline: "Ingeniería de software, marketing digital y fotografía con auténtica pasión por el diseño gráfico.",
+  bio: "Desarrollador de software Mid-Level con perfil multidisciplinario. Combino la solidez del desarrollo Full Stack y móvil (.NET, Next.js, Flutter) con estrategias de marketing digital y e-commerce, dirección de arte en fotografía con Lightroom, herramientas de IA y una genuina pasión por el diseño gráfico y la identidad de marca.",
+  shortBio: "Ingeniero y desarrollador mid-level con experiencia en marketing digital, fotografía en Lightroom y pasión por el diseño gráfico.",
   location: "Arequipa & Puno, Perú",
   email: "willyabrahamsucasaire@gmail.com",
   phone: "+51 963 530 811",
@@ -19,8 +19,8 @@ export const PERSONAL_INFO = {
     { name: "Inglés", level: "Avanzado (B2 - Centro Cultural Peruano Norteamericano)" }
   ],
   stats: [
-    { label: "Experiencia en Desarrollo & Web", value: "Mid-Level" },
-    { label: "Fotos procesadas en Lightroom", value: "+500" },
+    { label: "Experiencia en Desarrollo & Aplicaciones", value: "Mid-Level" },
+    { label: "Fotos procesadas en Lightroom", value: "+50" },
     { label: "Uso de Herramientas de IA", value: "Activo" },
     { label: "Enfoque Profesional", value: "Híbrido" }
   ]

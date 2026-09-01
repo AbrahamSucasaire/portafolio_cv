@@ -2,7 +2,7 @@
 
 import React from "react";
 import { PERSONAL_INFO } from "@/data/portfolio-data";
-import { ArrowDown, Sparkles, Camera, Palette, Layers, Award, ArrowUpRight } from "lucide-react";
+import { ArrowDown, Sparkles, Camera, Palette, Layers, Award, ArrowUpRight, Code2, TrendingUp } from "lucide-react";
 
 export default function Hero() {
   return (
@@ -20,7 +20,7 @@ export default function Hero() {
             {/* Status Pill */}
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass-panel border border-brand-500/30 text-xs font-mono text-brand-300">
               <span className="w-2 h-2 rounded-full bg-brand-500 animate-ping" />
-              <span>DISPONIBLE PARA PUESTO DE DISEÑO VISUAL & DESARROLLO</span>
+              <span>DISPONIBLE PARA DESARROLLO, MARKETING & DISEÑO</span>
             </div>
 
             {/* Main Editorial Headline */}
@@ -28,35 +28,35 @@ export default function Hero() {
               <h2 className="font-mono text-xs sm:text-sm tracking-widest text-gray-400 uppercase font-semibold">
                 Willy Abraham Sucasaire Coaquira
               </h2>
-              <h1 className="font-display text-4xl sm:text-6xl xl:text-7xl font-extrabold tracking-tight leading-[1.05] text-white">
-                Diseño Visual con <br />
-                <span className="text-gradient-primary">Pasión Fotográfica</span> & <br />
-                <span className="text-gradient-cyan">Solidez Mid-Level</span>
+              <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl xl:text-[3.25rem] font-extrabold tracking-tight leading-[1.15] text-white">
+                Desarrollo de Software, <br />
+                <span className="text-gradient-primary">Marketing & Fotografía</span> <br />
+                <span className="text-gradient-cyan">con Pasión por el Diseño</span>
               </h1>
             </div>
 
             {/* Value Proposition Description */}
-            <p className="text-base sm:text-lg text-gray-300 max-w-2xl font-normal leading-relaxed">
-              Desarrollador de software <strong className="text-white font-semibold">Mid-Level</strong> y entusiasta del diseño visual. Uno mi experiencia técnica en <strong className="text-white font-semibold">Next.js, .NET y React</strong> con mi pasión por la <strong className="text-white font-semibold">fotografía en Lightroom</strong>, el flujo con <strong className="text-white font-semibold">IA Generativa</strong> y el diseño funcional de interfaces.
+            <p className="text-sm sm:text-base text-gray-300 max-w-2xl font-normal leading-relaxed">
+              Desarrollador de software <strong className="text-white font-semibold">Mid-Level</strong> con un perfil multidisciplinario: fusiono la ingeniería de software (<strong className="text-white font-semibold">Next.js, .NET, Flutter</strong>) con estrategias de <strong className="text-white font-semibold">marketing digital & e-commerce</strong>, dirección de arte en <strong className="text-white font-semibold">fotografía con Lightroom</strong>, flujos asistidos por <strong className="text-white font-semibold">IA</strong> y una auténtica pasión por el <strong className="text-white font-semibold">diseño gráfico y branding</strong>.
             </p>
 
             {/* Core Pillars / Tool Badges */}
             <div className="flex flex-wrap gap-2.5 pt-2">
               <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-500/10 border border-blue-500/30 text-blue-300 text-xs font-medium">
-                <Layers className="w-3.5 h-3.5" />
-                Desarrollo Full Stack (Mid-Level)
+                <Code2 className="w-3.5 h-3.5" />
+                Desarrollo de Software (Mid-Level)
+              </span>
+              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-medium">
+                <TrendingUp className="w-3.5 h-3.5" />
+                Marketing Digital & Social Media
               </span>
               <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-medium">
                 <Camera className="w-3.5 h-3.5" />
                 Fotografía & Lightroom (Color Grading)
               </span>
               <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-purple-500/10 border border-purple-500/30 text-purple-300 text-xs font-medium">
-                <Sparkles className="w-3.5 h-3.5" />
-                IA Generativa (Nano Banana / Diffusion)
-              </span>
-              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-medium">
                 <Palette className="w-3.5 h-3.5" />
-                Photoshop & Illustrator (Entusiasta)
+                Diseño Gráfico & Identidad Visual
               </span>
             </div>
 
