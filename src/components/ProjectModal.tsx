@@ -2,22 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { DesignProject } from "@/types/portfolio";
-import {
-  X,
-  Check,
-  Copy,
-  ExternalLink,
-  Layers,
-  Palette,
-  Type,
-  Package,
-  Sparkles,
-  Maximize2,
-  ChevronLeft,
-  ChevronRight,
-  Sliders,
-  Eye
-} from "lucide-react";
+import { X, ChevronLeft, ChevronRight, Palette, Type, Package, Layers, ExternalLink, Maximize2 } from "lucide-react";
 
 interface ProjectModalProps {
   project: DesignProject | null;
@@ -25,18 +10,19 @@ interface ProjectModalProps {
 }
 
 export default function ProjectModal({ project, onClose }: ProjectModalProps) {
+  const [activeImage, setActiveImage] = useState<string | null>(null);
   const [copiedHex, setCopiedHex] = useState<string | null>(null);
-  const [activeImage, setActiveImage] = useState<string>(project?.coverImage || "");
   const [selectedZoomImage, setSelectedZoomImage] = useState<string | null>(null);
 
-  // Set default active image when project changes
+  // Sync activeImage when project opens or changes
   useEffect(() => {
     if (project) {
       setActiveImage(project.coverImage);
+      setSelectedZoomImage(null);
     }
   }, [project]);
 
-  // Keyboard navigation & lock scroll
+  // Handle ESC key to close modal or zoom overlay
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -81,28 +67,28 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
   };
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-2 sm:p-6 bg-black/90 backdrop-blur-2xl animate-in fade-in duration-300">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-2 sm:p-6 bg-slate-900/60 dark:bg-black/90 backdrop-blur-2xl animate-in fade-in duration-300">
       
       {/* Background click to close */}
       <div className="fixed inset-0" onClick={onClose} />
 
-      {/* Main Container: Split 2-Column Side-by-Side (Like Photo Lightbox) */}
-      <div className="relative w-full max-w-6xl max-h-[94vh] overflow-y-auto md:overflow-hidden bg-canvas-900 border border-white/15 rounded-3xl shadow-2xl z-10 flex flex-col md:flex-row">
+      {/* Main Container: Split 2-Column Side-by-Side (Adaptive Light & Dark) */}
+      <div className="relative w-full max-w-6xl max-h-[94vh] overflow-y-auto md:overflow-hidden bg-white dark:bg-canvas-900 border border-black/10 dark:border-white/15 rounded-3xl shadow-2xl z-10 flex flex-col md:flex-row">
         
         {/* Floating Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-3 right-3 sm:top-4 sm:right-4 z-30 p-2.5 rounded-full bg-black/75 hover:bg-white/20 text-white backdrop-blur-md border border-white/20 shadow-xl transition-colors"
+          className="absolute top-3 right-3 sm:top-4 sm:right-4 z-30 p-2.5 rounded-full bg-black/75 hover:bg-black/90 text-white backdrop-blur-md border border-white/20 shadow-xl transition-colors"
           aria-label="Cerrar caso de estudio"
         >
           <X className="w-5 h-5" />
         </button>
 
-        {/* LEFT COLUMN: Media Preview & Design Strategy (Visible & scrollable on mobile) */}
-        <div className="relative w-full md:flex-1 flex flex-col justify-between bg-black/95 p-4 sm:p-6 md:p-7 md:overflow-y-auto space-y-4 sm:space-y-5 flex-shrink-0 md:flex-shrink">
+        {/* LEFT COLUMN: Media Preview & Design Strategy (Adaptive Light & Dark) */}
+        <div className="relative w-full md:flex-1 flex flex-col justify-between bg-slate-100 dark:bg-black/95 p-4 sm:p-6 md:p-7 md:overflow-y-auto space-y-4 sm:space-y-5 flex-shrink-0 md:flex-shrink border-b md:border-b-0 md:border-r border-black/10 dark:border-white/10">
           
-          {/* Main Media Showcase */}
-          <div className="relative w-full flex items-center justify-center bg-canvas-950/90 rounded-2xl border border-white/10 p-2 sm:p-4 min-h-[220px] sm:min-h-[280px] md:min-h-[380px] group flex-shrink-0">
+          {/* Main Media Showcase Container */}
+          <div className="relative w-full flex items-center justify-center bg-white dark:bg-black/90 rounded-2xl border border-black/10 dark:border-white/10 p-2 sm:p-4 min-h-[220px] sm:min-h-[280px] md:min-h-[380px] shadow-lg dark:shadow-none group flex-shrink-0">
             
             {/* Previous image arrow */}
             {images.length > 1 && (
@@ -111,7 +97,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                   e.stopPropagation();
                   handlePrevImage();
                 }}
-                className="absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 z-20 p-2 sm:p-2.5 rounded-full bg-black/75 hover:bg-white/20 text-white backdrop-blur-md border border-white/20 transition-all hover:scale-110 shadow-lg"
+                className="absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 z-20 p-2 sm:p-2.5 rounded-full bg-black/75 hover:bg-black/90 text-white backdrop-blur-md border border-white/20 transition-all hover:scale-110 shadow-lg"
                 aria-label="Imagen anterior"
               >
                 <ChevronLeft className="w-4 sm:w-5 h-4 sm:h-5" />
@@ -127,7 +113,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
               <img
                 src={currentDisplayImage}
                 alt={project.title}
-                className="max-h-[200px] sm:max-h-[260px] md:max-h-[50vh] w-auto max-w-full object-contain rounded-xl shadow-2xl group-hover:scale-[1.01] transition-transform duration-300"
+                className="max-h-[200px] sm:max-h-[260px] md:max-h-[50vh] w-auto max-w-full object-contain rounded-xl shadow-xl group-hover:scale-[1.01] transition-transform duration-300"
               />
               
               {/* Zoom pill overlay */}
@@ -146,7 +132,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                   e.stopPropagation();
                   handleNextImage();
                 }}
-                className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 z-20 p-2 sm:p-2.5 rounded-full bg-black/75 hover:bg-white/20 text-white backdrop-blur-md border border-white/20 transition-all hover:scale-110 shadow-lg"
+                className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 z-20 p-2 sm:p-2.5 rounded-full bg-black/75 hover:bg-black/90 text-white backdrop-blur-md border border-white/20 transition-all hover:scale-110 shadow-lg"
                 aria-label="Siguiente imagen"
               >
                 <ChevronRight className="w-4 sm:w-5 h-4 sm:h-5" />
@@ -157,9 +143,9 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
           {/* Thumbnails Row (Quick Switcher) */}
           {images.length > 1 && (
             <div className="space-y-2">
-              <div className="flex items-center justify-between text-[11px] font-mono text-gray-400 px-1">
+              <div className="flex items-center justify-between text-[11px] font-mono text-gray-600 dark:text-gray-400 px-1">
                 <span>Vistas & Mockups ({images.length} piezas)</span>
-                <span className="text-brand-400">Toca para cambiar de vista</span>
+                <span className="text-brand-600 dark:text-brand-400 font-semibold">Toca para cambiar de vista</span>
               </div>
               <div className="flex items-center gap-2.5 overflow-x-auto pb-1 no-scrollbar">
                 {images.map((img, idx) => (
@@ -168,8 +154,8 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                     onClick={() => setActiveImage(img)}
                     className={`relative flex-shrink-0 w-16 sm:w-20 aspect-[16/10] rounded-xl overflow-hidden border transition-all duration-200 ${
                       activeImage === img
-                        ? "border-brand-500 ring-2 ring-brand-500/40 scale-105"
-                        : "border-white/15 opacity-60 hover:opacity-100"
+                        ? "border-brand-500 ring-2 ring-brand-500/40 scale-105 shadow-md"
+                        : "border-black/15 dark:border-white/15 opacity-70 hover:opacity-100 bg-white dark:bg-black/40"
                     }`}
                   >
                     <img
@@ -183,22 +169,22 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
             </div>
           )}
 
-          {/* Challenge & Solution Cards (Narrativa de Diseño) */}
+          {/* Challenge & Solution Cards (Adaptive Light & Dark) */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-1">
-            <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/10 space-y-1.5">
-              <div className="text-[11px] font-mono font-bold uppercase tracking-wider text-amber-400 flex items-center gap-1.5">
+            <div className="p-4 rounded-2xl bg-amber-500/[0.08] dark:bg-white/[0.04] border border-amber-500/25 dark:border-white/10 space-y-1.5 shadow-sm dark:shadow-none">
+              <div className="text-[11px] font-mono font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400 flex items-center gap-1.5">
                 <span>El Desafío</span>
               </div>
-              <p className="text-xs text-gray-300 leading-relaxed">
+              <p className="text-xs text-gray-700 dark:text-gray-300 leading-relaxed">
                 {project.challenge}
               </p>
             </div>
 
-            <div className="p-4 rounded-2xl bg-brand-500/[0.04] border border-brand-500/20 space-y-1.5">
-              <div className="text-[11px] font-mono font-bold uppercase tracking-wider text-brand-400 flex items-center gap-1.5">
+            <div className="p-4 rounded-2xl bg-brand-500/[0.08] dark:bg-brand-500/[0.08] border border-brand-500/25 space-y-1.5 shadow-sm dark:shadow-none">
+              <div className="text-[11px] font-mono font-bold uppercase tracking-wider text-brand-600 dark:text-brand-400 flex items-center gap-1.5">
                 <span>Solución & Estrategia</span>
               </div>
-              <p className="text-xs text-gray-300 leading-relaxed">
+              <p className="text-xs text-gray-700 dark:text-gray-300 leading-relaxed">
                 {project.solution}
               </p>
             </div>
@@ -206,36 +192,36 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
 
         </div>
 
-        {/* RIGHT COLUMN: Project Info & Color Palette (Like Photo Lightbox) */}
-        <div className="w-full md:w-[380px] lg:w-[410px] flex-shrink-0 bg-canvas-900 border-t md:border-t-0 md:border-l border-white/10 p-6 sm:p-7 overflow-y-auto space-y-6 flex flex-col justify-between">
+        {/* RIGHT COLUMN: Project Info & Color Palette (Adaptive Light & Dark) */}
+        <div className="w-full md:w-[380px] lg:w-[410px] flex-shrink-0 bg-white dark:bg-canvas-900 p-6 sm:p-7 overflow-y-auto space-y-6 flex flex-col justify-between">
           
           <div className="space-y-6">
             
             {/* Header & Title */}
             <div className="space-y-2">
               <div className="flex items-center gap-2">
-                <span className="px-2.5 py-0.5 rounded-full bg-brand-500/20 border border-brand-500/30 text-brand-300 text-[10px] font-mono uppercase tracking-wider font-semibold">
+                <span className="px-2.5 py-0.5 rounded-full bg-brand-500/10 dark:bg-brand-500/20 border border-brand-500/20 dark:border-brand-500/30 text-brand-600 dark:text-brand-300 text-[10px] font-mono uppercase tracking-wider font-semibold">
                   {project.categoryLabel}
                 </span>
-                <span className="text-[11px] font-mono text-gray-400">
+                <span className="text-[11px] font-mono text-gray-500 dark:text-gray-400">
                   {project.year} • {project.clientOrContext}
                 </span>
               </div>
 
-              <h3 className="font-display font-bold text-xl sm:text-2xl text-white pt-0.5 leading-snug">
+              <h3 className="font-display font-bold text-xl sm:text-2xl text-gray-900 dark:text-white pt-0.5 leading-snug">
                 {project.title}
               </h3>
 
-              <p className="text-xs sm:text-sm text-gray-300 leading-relaxed">
+              <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
                 {project.summary}
               </p>
             </div>
 
-            {/* Extracted Color Palette (Identical to Photo Lightbox) */}
-            <div className="space-y-2.5 p-4 rounded-2xl bg-white/[0.02] border border-white/10">
+            {/* Extracted Color Palette */}
+            <div className="space-y-2.5 p-4 rounded-2xl bg-slate-50 dark:bg-white/[0.02] border border-black/10 dark:border-white/10 shadow-sm dark:shadow-none">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-mono text-gray-200 flex items-center gap-1.5 font-semibold">
-                  <Palette className="w-3.5 h-3.5 text-brand-400" />
+                <span className="text-xs font-mono text-gray-900 dark:text-gray-200 flex items-center gap-1.5 font-semibold">
+                  <Palette className="w-3.5 h-3.5 text-brand-500 dark:text-brand-400" />
                   <span>Paleta Cromática del Proyecto</span>
                 </span>
               </div>
@@ -246,11 +232,11 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                   <button
                     key={i}
                     onClick={() => copyToClipboard(c.hex)}
-                    className="group relative flex-1 h-9 rounded-lg border border-white/20 transition-transform hover:scale-110 focus:outline-none"
+                    className="group relative flex-1 h-9 rounded-lg border border-black/10 dark:border-white/20 transition-transform hover:scale-110 focus:outline-none shadow-sm"
                     style={{ backgroundColor: c.hex }}
                     title={`Copiar ${c.name}: ${c.hex}`}
                   >
-                    <span className="absolute -bottom-6 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 bg-black/80 px-1.5 py-0.5 rounded text-[9px] font-mono text-white pointer-events-none whitespace-nowrap z-30 transition-opacity">
+                    <span className="absolute -bottom-6 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 bg-black/85 px-1.5 py-0.5 rounded text-[9px] font-mono text-white pointer-events-none whitespace-nowrap z-30 transition-opacity">
                       {c.hex}
                     </span>
                   </button>
@@ -258,7 +244,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
               </div>
 
               {/* Palette names list */}
-              <div className="grid grid-cols-2 gap-1.5 pt-1 text-[11px] font-mono text-gray-400">
+              <div className="grid grid-cols-2 gap-1.5 pt-1 text-[11px] font-mono text-gray-600 dark:text-gray-400">
                 {project.colors.map((c, i) => (
                   <div key={i} className="flex items-center gap-1.5 truncate">
                     <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: c.hex }} />
@@ -267,22 +253,22 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                 ))}
               </div>
 
-              <p className="text-[10px] text-gray-400 font-mono text-center pt-1 border-t border-white/5">
+              <p className="text-[10px] text-gray-500 dark:text-gray-400 font-mono text-center pt-1 border-t border-black/5 dark:border-white/5">
                 {copiedHex ? `¡Copiado ${copiedHex}!` : "Toca un color para copiar su código HEX"}
               </p>
             </div>
 
             {/* Typography Specs */}
-            <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/10 space-y-2">
-              <div className="flex items-center gap-1.5 text-xs font-mono font-semibold text-gray-300">
-                <Type className="w-3.5 h-3.5 text-cyan-400" />
+            <div className="p-4 rounded-2xl bg-slate-50 dark:bg-white/[0.02] border border-black/10 dark:border-white/10 space-y-2 shadow-sm dark:shadow-none">
+              <div className="flex items-center gap-1.5 text-xs font-mono font-semibold text-gray-900 dark:text-gray-300">
+                <Type className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400" />
                 <span>Tipografías Utilizadas</span>
               </div>
               <div className="flex flex-wrap gap-1.5">
                 {project.typography.map((font, i) => (
                   <span
                     key={i}
-                    className="px-2.5 py-1 rounded-lg bg-white/[0.05] border border-white/10 text-[11px] font-mono text-gray-200"
+                    className="px-2.5 py-1 rounded-lg bg-black/[0.04] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-[11px] font-mono text-gray-800 dark:text-gray-200"
                   >
                     {font}
                   </span>
@@ -291,15 +277,15 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
             </div>
 
             {/* Deliverables List */}
-            <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/10 space-y-2">
-              <div className="flex items-center gap-1.5 text-xs font-mono font-semibold text-gray-300">
-                <Package className="w-3.5 h-3.5 text-amber-400" />
+            <div className="p-4 rounded-2xl bg-slate-50 dark:bg-white/[0.02] border border-black/10 dark:border-white/10 space-y-2 shadow-sm dark:shadow-none">
+              <div className="flex items-center gap-1.5 text-xs font-mono font-semibold text-gray-900 dark:text-gray-300">
+                <Package className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
                 <span>Entregables Clave</span>
               </div>
-              <ul className="space-y-1.5 text-xs text-gray-300">
+              <ul className="space-y-1.5 text-xs text-gray-700 dark:text-gray-300">
                 {project.deliverables.map((item, i) => (
                   <li key={i} className="flex items-start gap-2 text-[11px]">
-                    <span className="w-1.5 h-1.5 rounded-full bg-amber-400 mt-1.5 flex-shrink-0" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1.5 flex-shrink-0" />
                     <span>{item}</span>
                   </li>
                 ))}
@@ -307,16 +293,16 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
             </div>
 
             {/* Software / Tools */}
-            <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/10 space-y-2">
-              <div className="flex items-center gap-1.5 text-xs font-mono font-semibold text-gray-300">
-                <Layers className="w-3.5 h-3.5 text-purple-400" />
+            <div className="p-4 rounded-2xl bg-slate-50 dark:bg-white/[0.02] border border-black/10 dark:border-white/10 space-y-2 shadow-sm dark:shadow-none">
+              <div className="flex items-center gap-1.5 text-xs font-mono font-semibold text-gray-900 dark:text-gray-300">
+                <Layers className="w-3.5 h-3.5 text-purple-600 dark:text-purple-400" />
                 <span>Herramientas & Software</span>
               </div>
               <div className="flex flex-wrap gap-1.5">
                 {project.tools.map((t, i) => (
                   <span
                     key={i}
-                    className="px-2.5 py-1 rounded-lg bg-white/[0.05] border border-white/10 text-[11px] font-mono text-gray-300"
+                    className="px-2.5 py-1 rounded-lg bg-black/[0.04] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-[11px] font-mono text-gray-700 dark:text-gray-300"
                   >
                     {t}
                   </span>
@@ -324,7 +310,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
               </div>
             </div>
 
-            {/* Live Link Button (if applicable) */}
+            {/* Live Link Button */}
             {project.liveUrl && (
               <a
                 href={project.liveUrl}
@@ -340,7 +326,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
           </div>
 
           {/* Bottom attribution */}
-          <div className="pt-4 border-t border-white/10 flex items-center justify-between text-[11px] font-mono text-gray-500">
+          <div className="pt-4 border-t border-black/10 dark:border-white/10 flex items-center justify-between text-[11px] font-mono text-gray-500 dark:text-gray-400">
             <span>Abraham Sucasaire</span>
             <span>{project.role}</span>
           </div>
@@ -349,48 +335,45 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
 
       </div>
 
-      {/* Fullscreen High-Resolution Zoom Lightbox Overlay */}
+      {/* FULLSCREEN HIGH-RESOLUTION ZOOM LIGHTBOX OVERLAY */}
       {selectedZoomImage && (
         <div
-          className="fixed inset-0 z-[130] flex items-center justify-center p-2 sm:p-6 bg-black/95 backdrop-blur-2xl animate-in fade-in zoom-in-95 duration-200 cursor-zoom-out"
           onClick={() => setSelectedZoomImage(null)}
+          className="fixed inset-0 z-[130] bg-black/95 backdrop-blur-3xl flex items-center justify-center p-2 sm:p-6 animate-in fade-in zoom-in-95 duration-200 cursor-pointer"
         >
-          {/* Prominent Close button top right */}
+          {/* Prominent tactile close button */}
           <button
-            onClick={(e) => {
-              e.stopPropagation();
-              setSelectedZoomImage(null);
-            }}
-            className="absolute top-4 right-4 sm:top-6 sm:right-6 z-[150] w-11 h-11 rounded-full bg-black/85 hover:bg-white/25 text-white backdrop-blur-xl border border-white/30 shadow-2xl flex items-center justify-center transition-all hover:scale-110 active:scale-95"
-            aria-label="Cerrar vista ampliada"
+            onClick={() => setSelectedZoomImage(null)}
+            className="fixed top-4 right-4 sm:top-6 sm:right-6 z-[150] w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-black/85 hover:bg-white/30 text-white border border-white/30 flex items-center justify-center shadow-2xl transition-all hover:scale-110 active:scale-95"
+            aria-label="Cerrar pantalla completa"
           >
-            <X className="w-6 h-6" />
+            <X className="w-6 h-6 text-white" />
           </button>
 
-          {/* Top Bar Info (Truncated on mobile so it never collides with close button) */}
-          <div className="absolute top-4 left-4 sm:top-6 sm:left-6 z-[140] flex items-center gap-2 pointer-events-none max-w-[calc(100%-80px)] sm:max-w-md">
-            <span className="px-3 py-1.5 rounded-full bg-black/80 backdrop-blur-md border border-white/20 text-xs font-mono text-gray-200 truncate">
+          {/* Top Title Bar */}
+          <div className="fixed top-4 left-4 sm:top-6 sm:left-6 z-[140] pointer-events-none max-w-[calc(100vw-80px)]">
+            <span className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-black/80 backdrop-blur-md border border-white/20 text-xs sm:text-sm font-display font-bold text-white tracking-wide shadow-xl truncate block">
               {project.title}
             </span>
           </div>
 
-          {/* Fullscreen Image Viewport (Clicking anywhere closes zoom) */}
-          <div className="relative max-w-7xl max-h-[92vh] w-full h-full flex items-center justify-center p-1 sm:p-3">
+          {/* Zoomed high-res image */}
+          <div className="relative max-w-full max-h-full flex items-center justify-center">
             <img
               src={selectedZoomImage}
-              alt="Vista ampliada"
-              className="max-h-[88vh] max-w-[96vw] w-auto h-auto object-contain rounded-2xl shadow-2xl border border-white/15"
+              alt="Vista completa de alta resolución"
+              className="max-h-[88vh] sm:max-h-[90vh] w-auto max-w-full object-contain rounded-2xl shadow-2xl"
             />
           </div>
 
-          {/* Bottom helper text */}
-          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-[140] text-[11px] font-mono text-gray-300 bg-black/80 px-4 py-1.5 rounded-full border border-white/15 pointer-events-none whitespace-nowrap shadow-lg">
-            <span className="sm:hidden">Toca en cualquier lugar o la ✕ para cerrar</span>
-            <span className="hidden sm:inline">Haz clic en cualquier lugar o presiona ESC para cerrar</span>
+          {/* Helper Notice Bottom Bar */}
+          <div className="fixed bottom-4 sm:bottom-6 inset-x-0 flex justify-center pointer-events-none px-4">
+            <span className="px-4 py-1.5 rounded-full bg-black/75 backdrop-blur-md border border-white/15 text-[11px] sm:text-xs font-mono text-gray-300 shadow-xl text-center">
+              Toca en cualquier lugar o presiona ESC para cerrar
+            </span>
           </div>
         </div>
       )}
-
     </div>
   );
 }

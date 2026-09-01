@@ -19,7 +19,7 @@ export default function Home() {
   const [selectedPhoto, setSelectedPhoto] = useState<PhotoItem | null>(null);
 
   return (
-    <main className="min-h-screen bg-canvas-950 text-gray-100 selection:bg-brand-500 selection:text-white relative">
+    <main className="min-h-screen bg-[#F8F9FA] dark:bg-canvas-950 text-gray-900 dark:text-gray-100 selection:bg-brand-500 selection:text-white relative transition-colors duration-300">
       {/* Global Navigation */}
       <Navbar />
 

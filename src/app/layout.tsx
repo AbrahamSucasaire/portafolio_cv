@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Syne, Space_Mono, Playfair_Display } from "next/font/google";
+import { ThemeProvider } from "@/context/ThemeContext";
 import "./globals.css";
 
 const inter = Inter({
@@ -28,11 +29,13 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Willy Abraham Sucasaire | Developer / Diseñador Gráfico",
-  description: "Portafolio profesional de Willy Abraham Sucasaire Coaquira. Diseño de identidad de marca, dirección de arte, composición editorial, fotografía en Lightroom y desarrollo visual.",
+  title: "Willy Abraham Sucasaire | Developer & Diseñador Visual",
+  description: "Portafolio profesional de Willy Abraham Sucasaire Coaquira. Desarrollo de software, marketing digital, dirección de arte, composición editorial, fotografía en Lightroom y diseño visual.",
   keywords: [
     "Diseñador Gráfico",
     "Visual Designer",
+    "Desarrollador Software",
+    "Marketing Digital",
     "Brand Identity",
     "Dirección de Arte",
     "Adobe Lightroom",
@@ -49,14 +52,14 @@ export const metadata: Metadata = {
     type: "website",
     locale: "es_PE",
     url: "https://abrahamsucasaire.vercel.app",
-    title: "Willy Abraham Sucasaire | Diseñador Gráfico & Art Director",
-    description: "Diseño visual de alto impacto con sensibilidad fotográfica y precisión técnica.",
+    title: "Willy Abraham Sucasaire | Developer & Diseñador Visual",
+    description: "Desarrollo de software, marketing digital y diseño visual con sensibilidad fotográfica.",
     siteName: "Willy Abraham Portfolio",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Willy Abraham Sucasaire | Diseñador Gráfico & Art Director",
-    description: "Portafolio profesional de diseño visual, branding y fotografía editorial.",
+    title: "Willy Abraham Sucasaire | Developer & Diseñador Visual",
+    description: "Portafolio profesional de desarrollo, marketing, branding y fotografía editorial.",
   },
 };
 
@@ -66,12 +69,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es" className="dark scroll-smooth">
+    <html lang="es" className="dark scroll-smooth" suppressHydrationWarning>
       <body
-        className={`${inter.variable} ${syne.variable} ${spaceMono.variable} ${playfair.variable} font-sans bg-canvas-950 text-gray-100 antialiased relative min-h-screen selection:bg-brand-500 selection:text-white`}
+        className={`${inter.variable} ${syne.variable} ${spaceMono.variable} ${playfair.variable} font-sans antialiased relative min-h-screen bg-[#F8F9FA] dark:bg-canvas-950 text-gray-900 dark:text-gray-100 selection:bg-brand-500 selection:text-white transition-colors duration-300`}
       >
-        <div className="fixed inset-0 bg-grid-pattern pointer-events-none opacity-40 z-0" />
-        <div className="relative z-10">{children}</div>
+        <ThemeProvider>
+          <div className="fixed inset-0 bg-grid-pattern pointer-events-none opacity-40 z-0" />
+          <div className="relative z-10">{children}</div>
+        </ThemeProvider>
       </body>
     </html>
   );
