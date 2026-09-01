@@ -28,7 +28,7 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Willy Abraham Sucasaire | Diseñador Gráfico & Art Director",
+  title: "Willy Abraham Sucasaire | Developer ,Diseñador Gráfico",
   description: "Portafolio profesional de Willy Abraham Sucasaire Coaquira. Diseño de identidad de marca, dirección de arte, composición editorial, fotografía en Lightroom y desarrollo visual.",
   keywords: [
     "Diseñador Gráfico",

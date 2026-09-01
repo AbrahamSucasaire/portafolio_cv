@@ -42,18 +42,18 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 md:p-10 overflow-y-auto bg-black/85 backdrop-blur-xl animate-in fade-in duration-300">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 md:p-8 lg:p-10 overflow-y-auto bg-black/90 backdrop-blur-xl animate-in fade-in duration-300">
       
       {/* Click backdrop to close */}
       <div className="fixed inset-0" onClick={onClose} />
 
-      {/* Modal Container */}
-      <div className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto bg-canvas-900 border border-white/15 rounded-3xl shadow-2xl z-10 text-gray-100 flex flex-col">
+      {/* Modal Container (Wider & Spacious) */}
+      <div className="relative w-full max-w-6xl xl:max-w-7xl max-h-[92vh] overflow-y-auto bg-canvas-900 border border-white/15 rounded-3xl shadow-2xl z-10 text-gray-100 flex flex-col custom-scrollbar">
         
         {/* Modal Header Bar */}
-        <div className="sticky top-0 z-20 flex items-center justify-between px-6 py-4 bg-canvas-900/90 backdrop-blur-md border-b border-white/10">
+        <div className="sticky top-0 z-20 flex items-center justify-between px-6 sm:px-8 py-4 bg-canvas-900/95 backdrop-blur-md border-b border-white/10">
           <div className="flex items-center gap-3">
-            <span className="px-3 py-1 rounded-full bg-brand-500/20 border border-brand-500/40 text-brand-300 text-xs font-mono font-medium">
+            <span className="px-3.5 py-1 rounded-full bg-brand-500/20 border border-brand-500/40 text-brand-300 text-xs font-mono font-semibold">
               {project.categoryLabel}
             </span>
             <span className="text-xs text-gray-400 font-mono hidden sm:inline-block">
@@ -63,7 +63,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
 
           <button
             onClick={onClose}
-            className="p-2 rounded-full bg-white/10 hover:bg-white/20 text-gray-300 hover:text-white transition-colors"
+            className="p-2.5 rounded-full bg-white/10 hover:bg-white/20 text-gray-300 hover:text-white transition-colors"
             aria-label="Cerrar ventana"
           >
             <X className="w-5 h-5" />
@@ -71,14 +71,14 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
         </div>
 
         {/* Modal Body */}
-        <div className="p-6 sm:p-8 space-y-8">
+        <div className="p-6 sm:p-8 lg:p-10 space-y-10">
           
           {/* Title & Subtitle */}
-          <div className="space-y-2">
-            <h2 className="font-display font-bold text-2xl sm:text-4xl text-white">
+          <div className="space-y-2.5 max-w-4xl">
+            <h2 className="font-display font-extrabold text-2xl sm:text-4xl lg:text-5xl text-white tracking-tight">
               {project.title}
             </h2>
-            <p className="text-base sm:text-lg text-gray-300">
+            <p className="text-base sm:text-lg text-gray-300 leading-relaxed">
               {project.subtitle}
             </p>
           </div>
@@ -86,16 +86,16 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
           {/* Hero Media Preview (Clickable to zoom) */}
           <div
             onClick={() => setSelectedZoomImage(project.coverImage)}
-            className="group relative rounded-2xl overflow-hidden border border-white/10 bg-canvas-950 aspect-[16/9] cursor-zoom-in shadow-xl"
-            title="Haz clic para ver imagen completa"
+            className="group relative rounded-3xl overflow-hidden border border-white/15 bg-canvas-950 aspect-[16/9] lg:aspect-[21/9] max-h-[500px] cursor-zoom-in shadow-2xl"
+            title="Haz clic para ver imagen completa en alta resolución"
           >
             <img
               src={project.coverImage}
               alt={project.title}
-              className="w-full h-full object-cover object-top group-hover:scale-103 transition-transform duration-500"
+              className="w-full h-full object-cover object-top group-hover:scale-102 transition-transform duration-500"
             />
             <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-              <div className="px-4 py-2 rounded-full bg-black/70 backdrop-blur-md border border-white/20 text-xs font-mono text-white flex items-center gap-2 shadow-2xl">
+              <div className="px-5 py-2.5 rounded-full bg-black/75 backdrop-blur-md border border-white/20 text-xs font-mono text-white flex items-center gap-2.5 shadow-2xl">
                 <Maximize2 className="w-4 h-4 text-brand-400" />
                 <span>Clic para ver en pantalla completa</span>
               </div>
@@ -103,10 +103,10 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
           </div>
 
           {/* Core Case Study Details Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
             
             {/* Left Content (Challenge & Solution) */}
-            <div className="md:col-span-8 space-y-6">
+            <div className="lg:col-span-8 space-y-8">
               
               {/* Summary */}
               <div className="space-y-2">
@@ -178,7 +178,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
             </div>
 
             {/* Right Sidebar Specs (Palette, Typo, Tools, Deliverables) */}
-            <div className="md:col-span-4 space-y-6">
+            <div className="lg:col-span-4 space-y-6">
               
               {/* Color Palette Spec */}
               <div className="p-5 rounded-2xl glass-panel border border-white/10 space-y-3">
